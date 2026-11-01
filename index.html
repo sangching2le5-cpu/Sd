@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>HSK 1 – Học tiếng Trung</title>
+
+<style>
+/* =========================================================
+   DESIGN SYSTEM – soft pastel blue & white
+   ========================================================= */
+:root {
+  --blue-50:  #f5f9ff;
+  --blue-100: #e6f0ff;
+  --blue-200: #cfe0fb;
+  --blue-300: #a9c7f5;
+  --blue-400: #7aa7ec;
+  --blue-500: #4f86d9;
+  --blue-600: #3a6bbd;
+  --ink:      #22324a;
+  --ink-soft: #5d6f88;
+  --white:    #ffffff;
+  --success:  #4caf82;
+  --warn:     #e8a13a;
+  --danger:   #d96a6a;
+
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 22px;
+
+  --shadow-sm: 0 2px 8px rgba(79,134,217,.10);
+  --shadow-md: 0 6px 20px rgba(79,134,217,.14);
+
+  --space-1: 6px;
+  --space-2: 12px;
+  --space-3: 18px;
+  --space-4: 26px;
+  --space-5: 38px;
+
+  --font: "Segoe UI", "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font);
+  color: var(--ink);
+  background: linear-gradient(180deg, var(--blue-50) 0%, var(--white) 100%);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--blue-600); text-decoration: none; }
+
+/* =========================================================
+   HEADER / NAVIGATION
+   ========================================================= */
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(255,255,255,.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--blue-100);
+}
+
+.app-header-inner {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: var(--space-2) var(--space-3);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--blue-600);
+}
+.brand-badge {
+  width: 34px; height: 34px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--blue-400), var(--blue-600));
+  color: #fff;
+  display: grid; place-items: center;
+  font-size: .85rem; font-weight: 700;
+  letter-spacing: .5px;
+}
+
+.main-nav {
+  margin-left: auto;
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.nav-btn {
+  border: none;
+  background: transparent;
+  color: var(--ink-soft);
+  font: inherit;
+  font-size: .9rem;
+  padding: 8px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background .18s, color .18s;
+  white-space: nowrap;
+}
+.nav-btn:hover { background: var(--blue-100); color: var(--blue-600); }
+.nav-btn.active { background: var(--blue-500); color: #fff; }
+.nav-btn:disabled { opacity: .45; cursor: not-allowed; }
+
+/* Mobile nav toggle */
+.nav-toggle {
+  display: none;
+  margin-left: auto;
+  border: 1px solid var(--blue-200);
+  background: var(--white);
+  color: var(--blue-600);
+  border-radius: 10px;
+  padding: 8px 12px;
+  font: inherit;
+  cursor: pointer;
+}
+
+/* =========================================================
+   LAYOUT
+   ========================================================= */
+.app-main {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: var(--space-4) var(--space-3) var(--space-5);
+}
+
+.view { display: none; }
+.view.active { display: block; animation: fadeIn .25s ease; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* =========================================================
+   CARDS
+   ========================================================= */
+.card {
+  background: var(--white);
+  border: 1px solid var(--blue-100);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-4);
+}
+
+.card + .card { margin-top: var(--space-3); }
+
+.card-title {
+  margin: 0 0 var(--space-1);
+  font-size: 1.15rem;
+  color: var(--ink);
+}
+.card-sub {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: .9rem;
+}
+
+.section-heading {
+  margin: var(--space-4) 0 var(--space-2);
+  font-size: 1.35rem;
+  color: var(--ink);
+}
+
+/* =========================================================
+   HERO / GREETING
+   ========================================================= */
+.hero {
+  background: linear-gradient(135deg, var(--blue-100), var(--white));
+  border: 1px solid var(--blue-200);
+}
+.hero h1 {
+  margin: 0 0 var(--space-1);
+  font-size: 1.6rem;
+  color: var(--blue-600);
+}
+.hero p { margin: 0; color: var(--ink-soft); }
+
+/* =========================================================
+   PROGRESS
+   ========================================================= */
+.progress-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-3);
+  margin-top: var(--space-3);
+}
+
+.progress-item { }
+
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: .85rem;
+  color: var(--ink-soft);
+  margin-bottom: 6px;
+}
+.progress-label strong { color: var(--ink); }
+
+.progress-bar {
+  height: 12px;
+  border-radius: 999px;
+  background: var(--blue-100);
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--blue-400), var(--blue-600));
+  transition: width .5s ease;
+}
+
+/* =========================================================
+   WEEK / LESSON DISPLAY
+   ========================================================= */
+.week-lesson {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-3);
+  margin-top: var(--space-3);
+}
+
+.stat-tile {
+  background: var(--blue-50);
+  border: 1px solid var(--blue-100);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  text-align: center;
+}
+.stat-tile .stat-value {
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: var(--blue-600);
+  line-height: 1.1;
+}
+.stat-tile .stat-label {
+  font-size: .8rem;
+  color: var(--ink-soft);
+  margin-top: 4px;
+}
+
+/* Current lesson highlight */
+.current-lesson {
+  margin-top: var(--space-3);
+  border-left: 4px solid var(--blue-500);
+  background: var(--blue-50);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+}
+.current-lesson .cl-week {
+  font-size: .8rem;
+  text-transform: uppercase;
+  letter-spacing: .6px;
+  color: var(--blue-600);
+  font-weight: 700;
+}
+.current-lesson .cl-title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin: 4px 0;
+  color: var(--ink);
+}
+.current-lesson .cl-desc {
+  font-size: .9rem;
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+/* Roadmap list (dashboard preview only) */
+.week-list {
+  list-style: none;
+  margin: var(--space-2) 0 0;
+  padding: 0;
+}
+.week-list li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 10px 0;
+  border-bottom: 1px solid var(--blue-50);
+  font-size: .92rem;
+}
+.week-list li:last-child { border-bottom: none; }
+.week-list .wk-num {
+  flex: 0 0 34px;
+  height: 34px;
+  border-radius: 10px;
+  display: grid; place-items: center;
+  font-weight: 700;
+  font-size: .8rem;
+  background: var(--blue-100);
+  color: var(--blue-600);
+}
+.week-list li.done .wk-num { background: var(--success); color: #fff; }
+.week-list .wk-info { flex: 1; }
+.week-list .wk-title { font-weight: 600; color: var(--ink); }
+.week-list .wk-sub { font-size: .8rem; color: var(--ink-soft); }
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  border-radius: 999px;
+  font: inherit;
+  font-weight: 600;
+  font-size: .92rem;
+  padding: 12px 22px;
+  cursor: pointer;
+  transition: transform .12s, box-shadow .18s, background .18s;
+}
+.btn-primary {
+  background: linear-gradient(135deg, var(--blue-500), var(--blue-600));
+  color: #fff;
+  box-shadow: var(--shadow-sm);
+}
+.btn-primary:hover { transform: translateY(-1px); box-shadow: var(--shadow-md); }
+.btn-ghost {
+  background: var(--blue-50);
+  color: var(--blue-600);
+  border: 1px solid var(--blue-200);
+}
+.btn-ghost:hover { background: var(--blue-100); }
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+.app-footer {
+  text-align: center;
+  color: var(--ink-soft);
+  font-size: .8rem;
+  padding: var(--space-3);
+  border-top: 1px solid var(--blue-100);
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 760px) {
+  .nav-toggle { display: block; }
+  .main-nav {
+    display: none;
+    flex-basis: 100%;
+    flex-direction: column;
+    gap: 4px;
+    padding-top: var(--space-2);
+  }
+  .main-nav.open { display: flex; }
+  .app-header-inner { flex-wrap: wrap; }
+
+  .progress-grid { grid-template-columns: 1fr; }
+  .week-lesson { grid-template-columns: 1fr 1fr; }
+  .hero h1 { font-size: 1.35rem; }
+  .card { padding: var(--space-3); }
+}
+
+@media (max-width: 440px) {
+  .week-lesson { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ===================== HEADER / NAV ===================== -->
+<header class="app-header">
+  <div class="app-header-inner">
+    <div class="brand">
+      <div class="brand-badge">HSK</div>
+      <span>HSK 1 · 中文</span>
+    </div>
+
+    <button class="nav-toggle" id="navToggle" aria-label="Mở menu">☰</button>
+
+    <nav class="main-nav" id="mainNav" aria-label="Điều hướng chính">
+      <button class="nav-btn active" data-view="dashboard">Tổng quan</button>
+      <button class="nav-btn" data-view="roadmap"    disabled>Lộ trình</button>
+      <button class="nav-btn" data-view="vocab"      disabled>Từ vựng</button>
+      <button class="nav-btn" data-view="grammar"    disabled>Ngữ pháp</button>
+      <button class="nav-btn" data-view="listening"  disabled>Nghe</button>
+      <button class="nav-btn" data-view="speaking"   disabled>Nói</button>
+      <button class="nav-btn" data-view="exercises"  disabled>Bài tập</button>
+      <button class="nav-btn" data-view="tests"      disabled>Kiểm tra</button>
+    </nav>
+  </div>
+</header>
+
+<!-- ===================== MAIN ===================== -->
+<main class="app-main">
+
+  <!-- DASHBOARD VIEW -->
+  <section class="view active" id="view-dashboard">
+
+    <!-- Hero / greeting -->
+    <div class="card hero">
+      <h1>Chào mừng đến với HSK 1 🎉</h1>
+      <p>Lộ trình 10 tuần · 20–30 phút mỗi ngày · Ưu tiên Nghe &amp; Nói</p>
+    </div>
+
+    <!-- Progress overview -->
+    <div class="card">
+      <h2 class="card-title">Tiến độ học tập</h2>
+      <p class="card-sub">Cập nhật tự động và lưu trên trình duyệt của bạn.</p>
+
+      <div class="progress-grid">
+        <div class="progress-item">
+          <div class="progress-label">
+            <span>Tiến độ tổng thể</span>
+            <strong id="overallPct">0%</strong>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" id="overallFill"></div>
+          </div>
+        </div>
+
+        <div class="progress-item">
+          <div class="progress-label">
+            <span>Tuần hiện tại</span>
+            <strong id="weekPct">0%</strong>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" id="weekFill"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Current week / lesson -->
+    <div class="card">
+      <h2 class="card-title">Tuần &amp; Bài học hiện tại</h2>
+      <p class="card-sub">10 tuần · 6 bài mỗi tuần · Tổng cộng 60 bài</p>
+
+      <div class="week-lesson">
+        <div class="stat-tile">
+          <div class="stat-value" id="statWeek">1</div>
+          <div class="stat-label">Tuần hiện tại</div>
+        </div>
+        <div class="stat-tile">
+          <div class="stat-value" id="statLesson">1</div>
+          <div class="stat-label">Bài hiện tại</div>
+        </div>
+        <div class="stat-tile">
+          <div class="stat-value" id="statStreak">0</div>
+          <div class="stat-label">Chuỗi ngày học</div>
+        </div>
+      </div>
+
+      <div class="current-lesson">
+        <div class="cl-week" id="clWeek">TUẦN 1</div>
+        <div class="cl-title" id="clTitle">Pinyin và Chào hỏi hằng ngày</div>
+        <p class="cl-desc" id="clDesc">Làm quen với Pinyin, thanh điệu và các câu chào hỏi cơ bản.</p>
+      </div>
+
+      <div style="margin-top: var(--space-3);">
+        <button class="btn btn-primary" id="startBtn">▶ Bắt đầu bài học</button>
+        <button class="btn btn-ghost" id="resetBtn">↺ Đặt lại tiến độ</button>
+      </div>
+    </div>
+
+    <!-- Roadmap preview -->
+    <div class="card">
+      <h2 class="card-title">Lộ trình 10 tuần</h2>
+      <p class="card-sub">Xem nhanh các tuần học. Chi tiết đầy đủ ở mục “Lộ trình”.</p>
+
+      <ul class="week-list" id="weekList"></ul>
+    </div>
+
+  </section>
+
+  <!-- Placeholder views for future modules -->
+  <section class="view" id="view-roadmap">
+    <div class="card">
+      <h2 class="card-title">Lộ trình học tập</h2>
+      <p class="card-sub">Module 2 – sẽ được xây dựng ở bước tiếp theo.</p>
+    </div>
+  </section>
+
+  <section class="view" id="view-vocab">
+    <div class="card"><h2 class="card-title">Từ vựng</h2><p class="card-sub">Module 3 – chưa triển khai.</p></div>
+  </section>
+  <section class="view" id="view-grammar">
+    <div class="card"><h2 class="card-title">Ngữ pháp</h2><p class="card-sub">Module 4 – chưa triển khai.</p></div>
+  </section>
+  <section class="view" id="view-listening">
+    <div class="card"><h2 class="card-title">Luyện nghe</h2><p class="card-sub">Module 5 – chưa triển khai.</p></div>
+  </section>
+  <section class="view" id="view-speaking">
+    <div class="card"><h2 class="card-title">Luyện nói</h2><p class="card-sub">Module 6 – chưa triển khai.</p></div>
+  </section>
+  <section class="view" id="view-exercises">
+    <div class="card"><h2 class="card-title">Bài tập tương tác</h2><p class="card-sub">Module 7 – chưa triển khai.</p></div>
+  </section>
+  <section class="view" id="view-tests">
+    <div class="card"><h2 class="card-title">Kiểm tra &amp; Đề thi thử</h2><p class="card-sub">Module 8 – chưa triển khai.</p></div>
+  </section>
+
+</main>
+
+<footer class="app-footer">
+  HSK 1 Learning App · Xây dựng theo từng module · Dữ liệu lưu trong localStorage
+</footer>
+
+<script>
+/* =========================================================
+   MODULE 1 – CORE SCRIPT
+   ========================================================= */
+
+/* ---------- Curriculum metadata (10 weeks × 6 lessons) ---------- */
+const CURRICULUM = [
+  { week: 1,  title: "Pinyin và Chào hỏi hằng ngày",          desc: "Làm quen Pinyin, thanh điệu và câu chào hỏi cơ bản." },
+  { week: 2,  title: "Giới thiệu bản thân",                   desc: "Tên, quốc tịch, nghề nghiệp và sở thích." },
+  { week: 3,  title: "Số đếm, Tuổi và Thời gian",             desc: "Số 1–100, tuổi, giờ và cách nói thời gian." },
+  { week: 4,  title: "Gia đình và Con người",                  desc: "Thành viên gia đình, miêu tả người." },
+  { week: 5,  title: "Đồ ăn và Đồ uống",                      desc: "Gọi món, đồ uống, sở thích ăn uống." },
+  { week: 6,  title: "Mua sắm và Tiền bạc",                   desc: "Hỏi giá, mặc cả, thanh toán." },
+  { week: 7,  title: "Hoạt động hằng ngày và Địa điểm",       desc: "Thói quen, địa điểm, chỉ đường đơn giản." },
+  { week: 8,  title: "Khả năng, Nhu cầu và Hội thoại",        desc: "会 / 能, muốn, cần, hội thoại ngắn." },
+  { week: 9,  title: "Luyện nghe và nói chuyên sâu",          desc: "Bài tập nghe–nói cường độ cao." },
+  { week: 10, title: "Ôn tập HSK 1 và Đánh giá cuối kỳ",      desc: "Ôn toàn bộ + bài kiểm tra mô phỏng HSK 1." }
+];
+const LESSONS_PER_WEEK = 6;
+const TOTAL_LESSONS = CURRICULUM.length * LESSONS_PER_WEEK; // 60
+
+/* ---------- Initial localStorage structure ---------- */
+const STORAGE_KEY = "hsk1_progress_v1";
+
+function defaultProgress() {
+  return {
+    version: 1,
+    createdAt: new Date().toISOString(),
+    currentWeek: 1,          // 1..10
+    currentLesson: 1,        // 1..6
+    completedLessons: [],    // e.g. ["1.1","1.2"]
+    streakDays: 0,
+    lastStudyDate: null,     // "YYYY-MM-DD"
+    moduleProgress: {        // per-module percent (0-100)
+      vocabulary: 0,
+      grammar: 0,
+      listening: 0,
+      speaking: 0,
+      exercises: 0,
+      tests: 0
+    }
+  };
+}
+
+function loadProgress() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) {
+      const fresh = defaultProgress();
+      saveProgress(fresh);
+      return fresh;
+    }
+    const parsed = JSON.parse(raw);
+    // Merge with defaults to stay forward-compatible
+    return Object.assign(defaultProgress(), parsed, {
+      moduleProgress: Object.assign(defaultProgress().moduleProgress, parsed.moduleProgress || {})
+    });
+  } catch (e) {
+    console.warn("Could not read progress, resetting.", e);
+    const fresh = defaultProgress();
+    saveProgress(fresh);
+    return fresh;
+  }
+}
+
+function saveProgress(p) {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); }
+  catch (e) { console.warn("Could not save progress.", e); }
+}
+
+let progress = loadProgress();
+
+/* ---------- Helpers ---------- */
+function lessonKey(w, l) { return `${w}.${l}`; }
+
+function overallPercent() {
+  return Math.round((progress.completedLessons.length / TOTAL_LESSONS) * 100);
+}
+
+function weekPercent() {
+  const w = progress.currentWeek;
+  const doneThisWeek = progress.completedLessons.filter(k => k.startsWith(w + ".")).length;
+  return Math.round((doneThisWeek / LESSONS_PER_WEEK) * 100);
+}
+
+function todayStr() {
+  const d = new Date();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${d.getFullYear()}-${m}-${day}`;
+}
+
+/* Update streak when the user starts/continues learning */
+function touchStreak() {
+  const today = todayStr();
+  if (progress.lastStudyDate === today) return;
+
+  const y = new Date();
+  y.setDate(y.getDate() - 1);
+  const ym = String(y.getMonth() + 1).padStart(2, "0");
+  const yd = String(y.getDate()).padStart(2, "0");
+  const yesterday = `${y.getFullYear()}-${ym}-${yd}`;
+
+  if (progress.lastStudyDate === yesterday) progress.streakDays += 1;
+  else progress.streakDays = 1;
+
+  progress.lastStudyDate = today;
+  saveProgress(progress);
+}
+
+/* ---------- Render dashboard ---------- */
+function renderDashboard() {
+  // Progress bars
+  const op = overallPercent();
+  const wp = weekPercent();
+  document.getElementById("overallPct").textContent = op + "%";
+  document.getElementById("weekPct").textContent    = wp + "%";
+  document.getElementById("overallFill").style.width = op + "%";
+  document.getElementById("weekFill").style.width    = wp + "%";
+
+  // Stat tiles
+  document.getElementById("statWeek").textContent   = progress.currentWeek;
+  document.getElementById("statLesson").textContent = progress.currentLesson;
+  document.getElementById("statStreak").textContent = progress.streakDays;
+
+  // Current lesson card
+  const wk = CURRICULUM[progress.currentWeek - 1] || CURRICULUM[0];
+  document.getElementById("clWeek").textContent  = `TUẦN ${wk.week} · BÀI ${progress.currentLesson}`;
+  document.getElementById("clTitle").textContent = wk.title;
+  document.getElementById("clDesc").textContent  = wk.desc;
+
+  // Week list preview
+  const list = document.getElementById("weekList");
+  list.innerHTML = "";
+  CURRICULUM.forEach(w => {
+    const doneCount = progress.completedLessons.filter(k => k.startsWith(w.week + ".")).length;
+    const done = doneCount >= LESSONS_PER_WEEK;
+    const isCurrent = w.week === progress.currentWeek;
+
+    const li = document.createElement("li");
+    if (done) li.classList.add("done");
+    li.innerHTML = `
+      <div class="wk-num">${done ? "✓" : "W" + w.week}</div>
+      <div class="wk-info">
+        <div class="wk-title">Tuần ${w.week} · ${w.title}</div>
+        <div class="wk-sub">${doneCount}/${LESSONS_PER_WEEK} bài hoàn thành${isCurrent ? " · Đang học" : ""}</div>
+      </div>
+    `;
+    list.appendChild(li);
+  });
+}
+
+/* ---------- Navigation ---------- */
+function showView(name) {
+  document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
+  const target = document.getElementById("view-" + name);
+  if (target) target.classList.add("active");
+
+  document.querySelectorAll(".nav-btn").forEach(b => {
+    b.classList.toggle("active", b.dataset.view === name);
+  });
+
+  // Close mobile menu
+  document.getElementById("mainNav").classList.remove("open");
+}
+
+document.querySelectorAll(".nav-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    if (btn.disabled) return;
+    showView(btn.dataset.view);
+  });
+});
+
+document.getElementById("navToggle").addEventListener("click", () => {
+  document.getElementById("mainNav").classList.toggle("open");
+});
+
+/* ---------- Actions ---------- */
+document.getElementById("startBtn").addEventListener("click", () => {
+  touchStreak();
+  renderDashboard();
+  // Placeholder: modules 2-10 will route to the actual lesson content.
+  alert(
+    `Bắt đầu Tuần ${progress.currentWeek} · Bài ${progress.currentLesson}\n\n` +
+    `Chủ đề: ${CURRICULUM[progress.currentWeek - 1].title}\n\n` +
+    `(Nội dung bài học sẽ được thêm ở các module tiếp theo.)`
+  );
+});
+
+document.getElementById("resetBtn").addEventListener("click", () => {
+  if (!confirm("Đặt lại toàn bộ tiến độ học tập?")) return;
+  progress = defaultProgress();
+  saveProgress(progress);
+  renderDashboard();
+});
+
+/* ---------- Init ---------- */
+renderDashboard();
+</script>
+
+</body>
+</html>
