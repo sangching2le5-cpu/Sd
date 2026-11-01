@@ -1,722 +1,510 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>HSK 1 – Học tiếng Trung</title>
-
-<style>
-/* =========================================================
-   DESIGN SYSTEM – soft pastel blue & white
-   ========================================================= */
-:root {
-  --blue-50:  #f5f9ff;
-  --blue-100: #e6f0ff;
-  --blue-200: #cfe0fb;
-  --blue-300: #a9c7f5;
-  --blue-400: #7aa7ec;
-  --blue-500: #4f86d9;
-  --blue-600: #3a6bbd;
-  --ink:      #22324a;
-  --ink-soft: #5d6f88;
-  --white:    #ffffff;
-  --success:  #4caf82;
-  --warn:     #e8a13a;
-  --danger:   #d96a6a;
-
-  --radius-sm: 10px;
-  --radius-md: 16px;
-  --radius-lg: 22px;
-
-  --shadow-sm: 0 2px 8px rgba(79,134,217,.10);
-  --shadow-md: 0 6px 20px rgba(79,134,217,.14);
-
-  --space-1: 6px;
-  --space-2: 12px;
-  --space-3: 18px;
-  --space-4: 26px;
-  --space-5: 38px;
-
-  --font: "Segoe UI", "Helvetica Neue", Arial, "Noto Sans", sans-serif;
-}
-
-* { box-sizing: border-box; }
-
-html, body {
-  margin: 0;
-  padding: 0;
-  font-family: var(--font);
-  color: var(--ink);
-  background: linear-gradient(180deg, var(--blue-50) 0%, var(--white) 100%);
-  min-height: 100vh;
-  -webkit-font-smoothing: antialiased;
-}
-
-a { color: var(--blue-600); text-decoration: none; }
-
-/* =========================================================
-   HEADER / NAVIGATION
-   ========================================================= */
-.app-header {
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  background: rgba(255,255,255,.92);
-  backdrop-filter: blur(8px);
-  border-bottom: 1px solid var(--blue-100);
-}
-
-.app-header-inner {
-  max-width: 1080px;
-  margin: 0 auto;
-  padding: var(--space-2) var(--space-3);
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-}
-
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-weight: 700;
-  font-size: 1.05rem;
-  color: var(--blue-600);
-}
-.brand-badge {
-  width: 34px; height: 34px;
-  border-radius: 10px;
-  background: linear-gradient(135deg, var(--blue-400), var(--blue-600));
-  color: #fff;
-  display: grid; place-items: center;
-  font-size: .85rem; font-weight: 700;
-  letter-spacing: .5px;
-}
-
-.main-nav {
-  margin-left: auto;
-  display: flex;
-  gap: 4px;
-  flex-wrap: wrap;
-}
-
-.nav-btn {
-  border: none;
-  background: transparent;
-  color: var(--ink-soft);
-  font: inherit;
-  font-size: .9rem;
-  padding: 8px 14px;
-  border-radius: 999px;
-  cursor: pointer;
-  transition: background .18s, color .18s;
-  white-space: nowrap;
-}
-.nav-btn:hover { background: var(--blue-100); color: var(--blue-600); }
-.nav-btn.active { background: var(--blue-500); color: #fff; }
-.nav-btn:disabled { opacity: .45; cursor: not-allowed; }
-
-/* Mobile nav toggle */
-.nav-toggle {
-  display: none;
-  margin-left: auto;
-  border: 1px solid var(--blue-200);
-  background: var(--white);
-  color: var(--blue-600);
-  border-radius: 10px;
-  padding: 8px 12px;
-  font: inherit;
-  cursor: pointer;
-}
-
-/* =========================================================
-   LAYOUT
-   ========================================================= */
-.app-main {
-  max-width: 1080px;
-  margin: 0 auto;
-  padding: var(--space-4) var(--space-3) var(--space-5);
-}
-
-.view { display: none; }
-.view.active { display: block; animation: fadeIn .25s ease; }
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(6px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-/* =========================================================
-   CARDS
-   ========================================================= */
-.card {
-  background: var(--white);
-  border: 1px solid var(--blue-100);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sm);
-  padding: var(--space-4);
-}
-
-.card + .card { margin-top: var(--space-3); }
-
-.card-title {
-  margin: 0 0 var(--space-1);
-  font-size: 1.15rem;
-  color: var(--ink);
-}
-.card-sub {
-  margin: 0;
-  color: var(--ink-soft);
-  font-size: .9rem;
-}
-
-.section-heading {
-  margin: var(--space-4) 0 var(--space-2);
-  font-size: 1.35rem;
-  color: var(--ink);
-}
-
-/* =========================================================
-   HERO / GREETING
-   ========================================================= */
-.hero {
-  background: linear-gradient(135deg, var(--blue-100), var(--white));
-  border: 1px solid var(--blue-200);
-}
-.hero h1 {
-  margin: 0 0 var(--space-1);
-  font-size: 1.6rem;
-  color: var(--blue-600);
-}
-.hero p { margin: 0; color: var(--ink-soft); }
-
-/* =========================================================
-   PROGRESS
-   ========================================================= */
-.progress-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--space-3);
-  margin-top: var(--space-3);
-}
-
-.progress-item { }
-
-.progress-label {
-  display: flex;
-  justify-content: space-between;
-  font-size: .85rem;
-  color: var(--ink-soft);
-  margin-bottom: 6px;
-}
-.progress-label strong { color: var(--ink); }
-
-.progress-bar {
-  height: 12px;
-  border-radius: 999px;
-  background: var(--blue-100);
-  overflow: hidden;
-}
-.progress-fill {
-  height: 100%;
-  width: 0%;
-  border-radius: 999px;
-  background: linear-gradient(90deg, var(--blue-400), var(--blue-600));
-  transition: width .5s ease;
-}
-
-/* =========================================================
-   WEEK / LESSON DISPLAY
-   ========================================================= */
-.week-lesson {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-3);
-  margin-top: var(--space-3);
-}
-
-.stat-tile {
-  background: var(--blue-50);
-  border: 1px solid var(--blue-100);
-  border-radius: var(--radius-md);
-  padding: var(--space-3);
-  text-align: center;
-}
-.stat-tile .stat-value {
-  font-size: 1.7rem;
-  font-weight: 700;
-  color: var(--blue-600);
-  line-height: 1.1;
-}
-.stat-tile .stat-label {
-  font-size: .8rem;
-  color: var(--ink-soft);
-  margin-top: 4px;
-}
-
-/* Current lesson highlight */
-.current-lesson {
-  margin-top: var(--space-3);
-  border-left: 4px solid var(--blue-500);
-  background: var(--blue-50);
-  border-radius: var(--radius-md);
-  padding: var(--space-3);
-}
-.current-lesson .cl-week {
-  font-size: .8rem;
-  text-transform: uppercase;
-  letter-spacing: .6px;
-  color: var(--blue-600);
-  font-weight: 700;
-}
-.current-lesson .cl-title {
-  font-size: 1.15rem;
-  font-weight: 600;
-  margin: 4px 0;
-  color: var(--ink);
-}
-.current-lesson .cl-desc {
-  font-size: .9rem;
-  color: var(--ink-soft);
-  margin: 0;
-}
-
-/* Roadmap list (dashboard preview only) */
-.week-list {
-  list-style: none;
-  margin: var(--space-2) 0 0;
-  padding: 0;
-}
-.week-list li {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  padding: 10px 0;
-  border-bottom: 1px solid var(--blue-50);
-  font-size: .92rem;
-}
-.week-list li:last-child { border-bottom: none; }
-.week-list .wk-num {
-  flex: 0 0 34px;
-  height: 34px;
-  border-radius: 10px;
-  display: grid; place-items: center;
-  font-weight: 700;
-  font-size: .8rem;
-  background: var(--blue-100);
-  color: var(--blue-600);
-}
-.week-list li.done .wk-num { background: var(--success); color: #fff; }
-.week-list .wk-info { flex: 1; }
-.week-list .wk-title { font-weight: 600; color: var(--ink); }
-.week-list .wk-sub { font-size: .8rem; color: var(--ink-soft); }
-
-/* =========================================================
-   BUTTONS
-   ========================================================= */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  border: none;
-  border-radius: 999px;
-  font: inherit;
-  font-weight: 600;
-  font-size: .92rem;
-  padding: 12px 22px;
-  cursor: pointer;
-  transition: transform .12s, box-shadow .18s, background .18s;
-}
-.btn-primary {
-  background: linear-gradient(135deg, var(--blue-500), var(--blue-600));
-  color: #fff;
-  box-shadow: var(--shadow-sm);
-}
-.btn-primary:hover { transform: translateY(-1px); box-shadow: var(--shadow-md); }
-.btn-ghost {
-  background: var(--blue-50);
-  color: var(--blue-600);
-  border: 1px solid var(--blue-200);
-}
-.btn-ghost:hover { background: var(--blue-100); }
-
-/* =========================================================
-   FOOTER
-   ========================================================= */
-.app-footer {
-  text-align: center;
-  color: var(--ink-soft);
-  font-size: .8rem;
-  padding: var(--space-3);
-  border-top: 1px solid var(--blue-100);
-}
-
-/* =========================================================
-   RESPONSIVE
-   ========================================================= */
-@media (max-width: 760px) {
-  .nav-toggle { display: block; }
-  .main-nav {
-    display: none;
-    flex-basis: 100%;
-    flex-direction: column;
-    gap: 4px;
-    padding-top: var(--space-2);
-  }
-  .main-nav.open { display: flex; }
-  .app-header-inner { flex-wrap: wrap; }
-
-  .progress-grid { grid-template-columns: 1fr; }
-  .week-lesson { grid-template-columns: 1fr 1fr; }
-  .hero h1 { font-size: 1.35rem; }
-  .card { padding: var(--space-3); }
-}
-
-@media (max-width: 440px) {
-  .week-lesson { grid-template-columns: 1fr; }
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HSK 1 - Lesson 2: 名字和国籍 (Tên và Quốc tịch)</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+    </style>
 </head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
 
-<body>
-
-<!-- ===================== HEADER / NAV ===================== -->
-<header class="app-header">
-  <div class="app-header-inner">
-    <div class="brand">
-      <div class="brand-badge">HSK</div>
-      <span>HSK 1 · 中文</span>
-    </div>
-
-    <button class="nav-toggle" id="navToggle" aria-label="Mở menu">☰</button>
-
-    <nav class="main-nav" id="mainNav" aria-label="Điều hướng chính">
-      <button class="nav-btn active" data-view="dashboard">Tổng quan</button>
-      <button class="nav-btn" data-view="roadmap"    disabled>Lộ trình</button>
-      <button class="nav-btn" data-view="vocab"      disabled>Từ vựng</button>
-      <button class="nav-btn" data-view="grammar"    disabled>Ngữ pháp</button>
-      <button class="nav-btn" data-view="listening"  disabled>Nghe</button>
-      <button class="nav-btn" data-view="speaking"   disabled>Nói</button>
-      <button class="nav-btn" data-view="exercises"  disabled>Bài tập</button>
-      <button class="nav-btn" data-view="tests"      disabled>Kiểm tra</button>
-    </nav>
-  </div>
-</header>
-
-<!-- ===================== MAIN ===================== -->
-<main class="app-main">
-
-  <!-- DASHBOARD VIEW -->
-  <section class="view active" id="view-dashboard">
-
-    <!-- Hero / greeting -->
-    <div class="card hero">
-      <h1>Chào mừng đến với HSK 1 🎉</h1>
-      <p>Lộ trình 10 tuần · 20–30 phút mỗi ngày · Ưu tiên Nghe &amp; Nói</p>
-    </div>
-
-    <!-- Progress overview -->
-    <div class="card">
-      <h2 class="card-title">Tiến độ học tập</h2>
-      <p class="card-sub">Cập nhật tự động và lưu trên trình duyệt của bạn.</p>
-
-      <div class="progress-grid">
-        <div class="progress-item">
-          <div class="progress-label">
-            <span>Tiến độ tổng thể</span>
-            <strong id="overallPct">0%</strong>
-          </div>
-          <div class="progress-bar">
-            <div class="progress-fill" id="overallFill"></div>
-          </div>
+    <!-- Top Navigation Header -->
+    <header class="bg-gradient-to-r from-red-600 to-rose-700 text-white shadow-md sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-3">
+            <div class="flex items-center space-x-3">
+                <div class="bg-white/20 p-2.5 rounded-xl text-xl">
+                    <i class="fa-solid fa-earth-asia"></i>
+                </div>
+                <div>
+                    <span class="text-xs uppercase tracking-wider bg-white/20 px-2 py-0.5 rounded-full font-semibold">HSK 1 – Cơ bản</span>
+                    <h1 class="text-xl md:text-2xl font-bold mt-0.5">第二课：名字和国籍</h1>
+                    <p class="text-xs text-rose-100">Bài 2: Tên và Quốc tịch (Míngzi hé guójí)</p>
+                </div>
+            </div>
+            <!-- Global Audio Controls -->
+            <div class="flex items-center gap-3 bg-black/20 px-3 py-1.5 rounded-xl text-sm">
+                <span class="text-xs text-rose-200"><i class="fa-solid fa-gauge-high mr-1"></i> Tốc độ:</span>
+                <button onclick="setSpeed(0.75)" id="spd-0.75" class="px-2 py-0.5 rounded text-xs hover:bg-white/25 transition">0.75x</button>
+                <button onclick="setSpeed(1)" id="spd-1" class="px-2 py-0.5 rounded text-xs bg-white/30 font-bold transition">1.0x</button>
+                <button onclick="setSpeed(1.25)" id="spd-1.25" class="px-2 py-0.5 rounded text-xs hover:bg-white/25 transition">1.25x</button>
+            </div>
         </div>
 
-        <div class="progress-item">
-          <div class="progress-label">
-            <span>Tuần hiện tại</span>
-            <strong id="weekPct">0%</strong>
-          </div>
-          <div class="progress-bar">
-            <div class="progress-fill" id="weekFill"></div>
-          </div>
+        <!-- Navigation Tabs -->
+        <div class="bg-red-800/60 backdrop-blur border-t border-red-500/30">
+            <div class="max-w-6xl mx-auto px-4 flex overflow-x-auto space-x-1 py-2 scrollbar-none">
+                <button onclick="switchTab('vocab')" id="btn-vocab" class="tab-btn px-4 py-2 rounded-lg font-medium text-sm whitespace-nowrap bg-white text-red-700 shadow-sm transition"><i class="fa-solid fa-book-open mr-1.5"></i> Từ vựng</button>
+                <button onclick="switchTab('grammar')" id="btn-grammar" class="tab-btn px-4 py-2 rounded-lg font-medium text-sm whitespace-nowrap text-white hover:bg-white/10 transition"><i class="fa-solid fa-pen-nib mr-1.5"></i> Ngữ pháp</button>
+                <button onclick="switchTab('quiz')" id="btn-quiz" class="tab-btn px-4 py-2 rounded-lg font-medium text-sm whitespace-nowrap text-white hover:bg-white/10 transition"><i class="fa-solid fa-clipboard-question mr-1.5"></i> Trắc nghiệm</button>
+                <button onclick="switchTab('roleplay')" id="btn-roleplay" class="tab-btn px-4 py-2 rounded-lg font-medium text-sm whitespace-nowrap text-white hover:bg-white/10 transition"><i class="fa-solid fa-comments mr-1.5"></i> Hội thoại</button>
+                <button onclick="switchTab('speaking')" id="btn-speaking" class="tab-btn px-4 py-2 rounded-lg font-medium text-sm whitespace-nowrap text-white hover:bg-white/10 transition"><i class="fa-solid fa-microphone mr-1.5"></i> Luyện nói</button>
+                <button onclick="switchTab('check')" id="btn-check" class="tab-btn px-4 py-2 rounded-lg font-medium text-sm whitespace-nowrap text-white hover:bg-white/10 transition"><i class="fa-solid fa-square-check mr-1.5"></i> Kiểm tra</button>
+            </div>
         </div>
-      </div>
-    </div>
+    </header>
 
-    <!-- Current week / lesson -->
-    <div class="card">
-      <h2 class="card-title">Tuần &amp; Bài học hiện tại</h2>
-      <p class="card-sub">10 tuần · 6 bài mỗi tuần · Tổng cộng 60 bài</p>
+    <!-- Main Container -->
+    <main class="max-w-6xl mx-auto px-4 py-6 flex-grow w-full">
 
-      <div class="week-lesson">
-        <div class="stat-tile">
-          <div class="stat-value" id="statWeek">1</div>
-          <div class="stat-label">Tuần hiện tại</div>
+        <!-- TAB 1: VOCABULARY -->
+        <div id="tab-vocab" class="tab-content active space-y-6">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
+                <div>
+                    <h2 class="text-lg font-bold text-slate-800"><i class="fa-solid fa-list-ul text-red-600 mr-2"></i> Danh sách từ vựng bài học</h2>
+                    <p class="text-sm text-slate-500">Nhấn vào nút loa để nghe phát âm chuẩn bản xứ (Mandarin zh-CN).</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <label class="flex items-center cursor-pointer text-sm font-medium text-slate-700 bg-slate-100 px-3 py-2 rounded-xl">
+                        <input type="checkbox" id="toggle-pinyin" checked onchange="togglePinyin()" class="mr-2 rounded text-red-600 focus:ring-red-500 w-4 h-4">
+                        Hiển thị Pinyin
+                    </label>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="vocab-grid">
+                <!-- Populated via JS -->
+            </div>
         </div>
-        <div class="stat-tile">
-          <div class="stat-value" id="statLesson">1</div>
-          <div class="stat-label">Bài hiện tại</div>
+
+        <!-- TAB 2: GRAMMAR -->
+        <div id="tab-grammar" class="tab-content space-y-6">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-8">
+                <div>
+                    <span class="bg-red-100 text-red-700 text-xs font-semibold px-2.5 py-1 rounded-full uppercase">Ngữ pháp A</span>
+                    <h3 class="text-xl font-bold text-slate-800 mt-2">1. Hỏi và trả lời tên (Asking someone’s name)</h3>
+                    <div class="bg-slate-50 border-l-4 border-red-500 p-4 rounded-r-xl my-3">
+                        <p class="font-bold text-slate-700">Cấu trúc hỏi:</p>
+                        <p class="text-lg font-semibold text-red-600 my-1">你 + 叫什么名字？ <button onclick="speakText('你叫什么名字？')" class="text-slate-400 hover:text-red-600 ml-2 text-sm"><i class="fa-solid fa-volume-high"></i></button></p>
+                        <p class="text-sm text-slate-500">Nǐ jiào shénme míngzi? (Bạn tên là gì?)</p>
+                    </div>
+                    <div class="bg-slate-50 border-l-4 border-emerald-500 p-4 rounded-r-xl my-3">
+                        <p class="font-bold text-slate-700">Cấu trúc trả lời:</p>
+                        <p class="text-lg font-semibold text-emerald-600 my-1">我叫 + [Tên] <button onclick="speakText('我叫安')" class="text-slate-400 hover:text-emerald-600 ml-2 text-sm"><i class="fa-solid fa-volume-high"></i></button></p>
+                        <p class="text-sm text-slate-500">Wǒ jiào + Tên (Tôi tên là...)</p>
+                    </div>
+                    <p class="text-sm text-slate-600 italic">Ví dụ: - 你叫什么名字？ / - 我叫安 (Wǒ jiào Ān - Tôi tên là An).</p>
+                </div>
+
+                <hr class="border-slate-100">
+
+                <div>
+                    <span class="bg-red-100 text-red-700 text-xs font-semibold px-2.5 py-1 rounded-full uppercase">Ngữ pháp B & C</span>
+                    <h3 class="text-xl font-bold text-slate-800 mt-2">2. Quốc tịch (Nationality)</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                            <p class="font-bold text-slate-700">Giới thiệu quốc tịch:</p>
+                            <p class="text-md font-semibold text-red-600 my-1">Subject + 是 + Quốc gia + 人</p>
+                            <p class="text-sm text-slate-600">Ví dụ: 我是越南人 (Wǒ shì Yuènán rén - Tôi là người Việt Nam).</p>
+                            <button onclick="speakText('我是越南人')" class="mt-2 text-xs bg-red-50 text-red-600 font-semibold px-3 py-1.5 rounded-lg border border-red-200 hover:bg-red-100 transition"><i class="fa-solid fa-volume-high mr-1"></i> Nghe mẫu</button>
+                        </div>
+                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                            <p class="font-bold text-slate-700">Hỏi quốc tịch:</p>
+                            <p class="text-md font-semibold text-red-600 my-1">你是哪国人？</p>
+                            <p class="text-sm text-slate-500">Nǐ shì nǎ guó rén? (Bạn là người nước nào?)</p>
+                            <button onclick="speakText('你是哪国人？')" class="mt-2 text-xs bg-red-50 text-red-600 font-semibold px-3 py-1.5 rounded-lg border border-red-200 hover:bg-red-100 transition"><i class="fa-solid fa-volume-high mr-1"></i> Nghe mẫu</button>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="border-slate-100">
+
+                <div>
+                    <span class="bg-red-100 text-red-700 text-xs font-semibold px-2.5 py-1 rounded-full uppercase">Ngữ pháp D</span>
+                    <h3 class="text-xl font-bold text-slate-800 mt-2">3. Giới thiệu bản thân ngắn gọn</h3>
+                    <div class="bg-amber-50 border border-amber-200 p-5 rounded-xl space-y-2">
+                        <p class="text-slate-800 font-medium">Kết hợp các mẫu câu:</p>
+                        <div class="flex items-center justify-between bg-white p-3 rounded-lg border border-amber-100">
+                            <span>我叫安。我是越南人。我是学生。</span>
+                            <button onclick="speakText('我叫安。我是越南人。我是学生。')" class="text-amber-600 hover:text-amber-700 p-2"><i class="fa-solid fa-volume-high text-lg"></i></button>
+                        </div>
+                        <p class="text-xs text-amber-800">Wǒ jiào Ān. Wǒ shì Yuènán rén. Wǒ shì xuésheng. (Tôi tên là An. Tôi là người Việt Nam. Tôi là học sinh/sinh viên.)</p>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="stat-tile">
-          <div class="stat-value" id="statStreak">0</div>
-          <div class="stat-label">Chuỗi ngày học</div>
+
+        <!-- TAB 3: QUIZ -->
+        <div id="tab-quiz" class="tab-content space-y-6">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                <div class="flex justify-between items-center mb-6">
+                    <div>
+                        <h2 class="text-lg font-bold text-slate-800"><i class="fa-solid fa-clipboard-question text-red-600 mr-2"></i> Trắc nghiệm nhanh (Quick Quiz)</h2>
+                        <p class="text-sm text-slate-500">Kiểm tra mức độ hiểu bài của bạn.</p>
+                    </div>
+                    <div id="quiz-score-badge" class="hidden bg-emerald-100 text-emerald-800 px-4 py-1.5 rounded-full font-bold text-sm">
+                        Điểm: <span id="score-val">0</span>/5
+                    </div>
+                </div>
+
+                <div id="quiz-container" class="space-y-6">
+                    <!-- Populated via JS -->
+                </div>
+
+                <div class="mt-6 flex justify-end">
+                    <button onclick="submitQuiz()" class="bg-red-600 text-white font-semibold px-6 py-2.5 rounded-xl shadow hover:bg-red-700 transition">Nộp bài & Kiểm tra đáp án</button>
+                </div>
+            </div>
         </div>
-      </div>
 
-      <div class="current-lesson">
-        <div class="cl-week" id="clWeek">TUẦN 1</div>
-        <div class="cl-title" id="clTitle">Pinyin và Chào hỏi hằng ngày</div>
-        <p class="cl-desc" id="clDesc">Làm quen với Pinyin, thanh điệu và các câu chào hỏi cơ bản.</p>
-      </div>
+        <!-- TAB 4: ROLEPLAY & LISTENING -->
+        <div id="tab-roleplay" class="tab-content space-y-6">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-6">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                    <div>
+                        <h2 class="text-lg font-bold text-slate-800"><i class="fa-solid fa-comments text-red-600 mr-2"></i> Luyện hội thoại (Role-play)</h2>
+                        <p class="text-sm text-slate-500">Nghe từng câu hoặc toàn bộ hội thoại giữa An (B) và David (A).</p>
+                    </div>
+                    <button onclick="playFullDialogue()" class="bg-rose-50 text-rose-700 hover:bg-rose-100 font-semibold px-4 py-2 rounded-xl border border-rose-200 transition text-sm flex items-center gap-2">
+                        <i class="fa-solid fa-play"></i> Nghe toàn bài hội thoại
+                    </button>
+                </div>
 
-      <div style="margin-top: var(--space-3);">
-        <button class="btn btn-primary" id="startBtn">▶ Bắt đầu bài học</button>
-        <button class="btn btn-ghost" id="resetBtn">↺ Đặt lại tiến độ</button>
-      </div>
-    </div>
+                <div class="space-y-4" id="dialogue-list">
+                    <!-- Populated via JS -->
+                </div>
+            </div>
+        </div>
 
-    <!-- Roadmap preview -->
-    <div class="card">
-      <h2 class="card-title">Lộ trình 10 tuần</h2>
-      <p class="card-sub">Xem nhanh các tuần học. Chi tiết đầy đủ ở mục “Lộ trình”.</p>
+        <!-- TAB 5: SPEAKING CHALLENGE -->
+        <div id="tab-speaking" class="tab-content space-y-6">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-6">
+                <div>
+                    <h2 class="text-lg font-bold text-slate-800"><i class="fa-solid fa-microphone text-red-600 mr-2"></i> Thử thách giới thiệu bản thân (Speaking Challenge)</h2>
+                    <p class="text-sm text-slate-500">Hãy đọc to đoạn văn mẫu dưới đây và thực hành phát âm chuẩn bản xứ.</p>
+                </div>
 
-      <ul class="week-list" id="weekList"></ul>
-    </div>
+                <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 space-y-4 text-center">
+                    <div class="inline-block bg-red-100 text-red-700 text-xs font-semibold px-3 py-1 rounded-full mb-1">Mẫu tự giới thiệu</div>
+                    <div class="text-xl font-bold text-slate-800 space-y-2">
+                        <p>你好！ <button onclick="speakText('你好！')" class="text-slate-400 hover:text-red-600 text-sm ml-1"><i class="fa-solid fa-volume-high"></i></button></p>
+                        <p>我叫 <span id="user-name-display" class="text-red-600 underline">______</span>。 <button onclick="speakText('我叫 ' + (document.getElementById('custom-name').value || '...'))" class="text-slate-400 hover:text-red-600 text-sm ml-1"><i class="fa-solid fa-volume-high"></i></button></p>
+                        <p>我是越南人。 <button onclick="speakText('我是越南人')" class="text-slate-400 hover:text-red-600 text-sm ml-1"><i class="fa-solid fa-volume-high"></i></button></p>
+                        <p>我是学生。 <button onclick="speakText('我是学生')" class="text-slate-400 hover:text-red-600 text-sm ml-1"><i class="fa-solid fa-volume-high"></i></button></p>
+                        <p>很高兴认识你！ <button onclick="speakText('很高兴认识你！')" class="text-slate-400 hover:text-red-600 text-sm ml-1"><i class="fa-solid fa-volume-high"></i></button></p>
+                    </div>
+                    <p class="text-xs text-slate-500 mt-2">Nǐ hǎo! Wǒ jiào... Wǒ shì Yuènán rén. Wǒ shì xuésheng. Hěn gāoxìng rènshi nǐ!</p>
+                </div>
 
-  </section>
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3">
+                    <label class="block text-sm font-semibold text-slate-700">Nhập tên tiếng Trung của bạn để cá nhân hóa:</label>
+                    <div class="flex gap-2">
+                        <input type="text" id="custom-name" placeholder="Ví dụ: 明明 (Míngming) hoặc An" class="flex-grow px-4 py-2 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500">
+                        <button onclick="updateCustomName()" class="bg-red-600 text-white px-5 py-2 rounded-xl font-medium hover:bg-red-700 transition">Cập nhật</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-  <!-- Placeholder views for future modules -->
-  <section class="view" id="view-roadmap">
-    <div class="card">
-      <h2 class="card-title">Lộ trình học tập</h2>
-      <p class="card-sub">Module 2 – sẽ được xây dựng ở bước tiếp theo.</p>
-    </div>
-  </section>
+        <!-- TAB 6: FINAL CHECK -->
+        <div id="tab-check" class="tab-content space-y-6">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-6">
+                <div>
+                    <h2 class="text-lg font-bold text-slate-800"><i class="fa-solid fa-square-check text-red-600 mr-2"></i> Kiểm tra cuối bài (Final Check)</h2>
+                    <p class="text-sm text-slate-500">Viết câu trả lời bằng tiếng Trung và kiểm tra kết quả.</p>
+                </div>
 
-  <section class="view" id="view-vocab">
-    <div class="card"><h2 class="card-title">Từ vựng</h2><p class="card-sub">Module 3 – chưa triển khai.</p></div>
-  </section>
-  <section class="view" id="view-grammar">
-    <div class="card"><h2 class="card-title">Ngữ pháp</h2><p class="card-sub">Module 4 – chưa triển khai.</p></div>
-  </section>
-  <section class="view" id="view-listening">
-    <div class="card"><h2 class="card-title">Luyện nghe</h2><p class="card-sub">Module 5 – chưa triển khai.</p></div>
-  </section>
-  <section class="view" id="view-speaking">
-    <div class="card"><h2 class="card-title">Luyện nói</h2><p class="card-sub">Module 6 – chưa triển khai.</p></div>
-  </section>
-  <section class="view" id="view-exercises">
-    <div class="card"><h2 class="card-title">Bài tập tương tác</h2><p class="card-sub">Module 7 – chưa triển khai.</p></div>
-  </section>
-  <section class="view" id="view-tests">
-    <div class="card"><h2 class="card-title">Kiểm tra &amp; Đề thi thử</h2><p class="card-sub">Module 8 – chưa triển khai.</p></div>
-  </section>
+                <div class="space-y-4">
+                    <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
+                        <p class="font-semibold text-slate-800">1. 你叫什么名字？ (Bạn tên là gì?)</p>
+                        <input type="text" id="check-ans-1" placeholder="Nhập câu trả lời tiếng Trung (vd: 我叫...)" class="w-full px-4 py-2 bg-white border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500">
+                        <p id="feedback-1" class="text-xs font-medium"></p>
+                    </div>
 
-</main>
+                    <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
+                        <p class="font-semibold text-slate-800">2. 你是哪国人？ (Bạn là người nước nào?)</p>
+                        <input type="text" id="check-ans-2" placeholder="Nhập câu trả lời tiếng Trung (vd: 我是越南人)" class="w-full px-4 py-2 bg-white border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500">
+                        <p id="feedback-2" class="text-xs font-medium"></p>
+                    </div>
 
-<footer class="app-footer">
-  HSK 1 Learning App · Xây dựng theo từng module · Dữ liệu lưu trong localStorage
-</footer>
+                    <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
+                        <p class="font-semibold text-slate-800">3. Giới thiệu bản thân bằng 2-3 câu tiếng Trung:</p>
+                        <textarea id="check-ans-3" rows="3" placeholder="Ví dụ: 我叫安。我是越南人。我是学生。" class="w-full px-4 py-2 bg-white border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500"></textarea>
+                        <p id="feedback-3" class="text-xs font-medium"></p>
+                    </div>
 
-<script>
-/* =========================================================
-   MODULE 1 – CORE SCRIPT
-   ========================================================= */
+                    <div class="flex justify-end">
+                        <button onclick="evaluateFinalCheck()" class="bg-red-600 text-white font-semibold px-6 py-2.5 rounded-xl shadow hover:bg-red-700 transition">Gửi chấm bài</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-/* ---------- Curriculum metadata (10 weeks × 6 lessons) ---------- */
-const CURRICULUM = [
-  { week: 1,  title: "Pinyin và Chào hỏi hằng ngày",          desc: "Làm quen Pinyin, thanh điệu và câu chào hỏi cơ bản." },
-  { week: 2,  title: "Giới thiệu bản thân",                   desc: "Tên, quốc tịch, nghề nghiệp và sở thích." },
-  { week: 3,  title: "Số đếm, Tuổi và Thời gian",             desc: "Số 1–100, tuổi, giờ và cách nói thời gian." },
-  { week: 4,  title: "Gia đình và Con người",                  desc: "Thành viên gia đình, miêu tả người." },
-  { week: 5,  title: "Đồ ăn và Đồ uống",                      desc: "Gọi món, đồ uống, sở thích ăn uống." },
-  { week: 6,  title: "Mua sắm và Tiền bạc",                   desc: "Hỏi giá, mặc cả, thanh toán." },
-  { week: 7,  title: "Hoạt động hằng ngày và Địa điểm",       desc: "Thói quen, địa điểm, chỉ đường đơn giản." },
-  { week: 8,  title: "Khả năng, Nhu cầu và Hội thoại",        desc: "会 / 能, muốn, cần, hội thoại ngắn." },
-  { week: 9,  title: "Luyện nghe và nói chuyên sâu",          desc: "Bài tập nghe–nói cường độ cao." },
-  { week: 10, title: "Ôn tập HSK 1 và Đánh giá cuối kỳ",      desc: "Ôn toàn bộ + bài kiểm tra mô phỏng HSK 1." }
-];
-const LESSONS_PER_WEEK = 6;
-const TOTAL_LESSONS = CURRICULUM.length * LESSONS_PER_WEEK; // 60
+    </main>
 
-/* ---------- Initial localStorage structure ---------- */
-const STORAGE_KEY = "hsk1_progress_v1";
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-4 mt-auto">
+        <div class="max-w-6xl mx-auto px-4 text-center text-xs text-slate-500">
+            HSK 1 Standard Mandarin Learning App &bull; Lesson 2: 名字和国籍 &bull; Native Voice Integration
+        </div>
+    </footer>
 
-function defaultProgress() {
-  return {
-    version: 1,
-    createdAt: new Date().toISOString(),
-    currentWeek: 1,          // 1..10
-    currentLesson: 1,        // 1..6
-    completedLessons: [],    // e.g. ["1.1","1.2"]
-    streakDays: 0,
-    lastStudyDate: null,     // "YYYY-MM-DD"
-    moduleProgress: {        // per-module percent (0-100)
-      vocabulary: 0,
-      grammar: 0,
-      listening: 0,
-      speaking: 0,
-      exercises: 0,
-      tests: 0
-    }
-  };
-}
+    <!-- JavaScript Application Logic -->
+    <script>
+        // Vocabulary Dataset
+        const vocabulary = [
+            { hanzi: "名字", pinyin: "míngzi", meaning: "tên" },
+            { hanzi: "叫", pinyin: "jiào", meaning: "tên là, được gọi là" },
+            { hanzi: "什么", pinyin: "shénme", meaning: "cái gì, gì" },
+            { hanzi: "我", pinyin: "wǒ", meaning: "tôi" },
+            { hanzi: "你", pinyin: "nǐ", meaning: "bạn" },
+            { hanzi: "他", pinyin: "tā", meaning: "anh ấy" },
+            { hanzi: "她", pinyin: "tā", meaning: "cô ấy" },
+            { hanzi: "是", pinyin: "shì", meaning: "là" },
+            { hanzi: "中国", pinyin: "Zhōngguó", meaning: "Trung Quốc" },
+            { hanzi: "越南", pinyin: "Yuènán", meaning: "Việt Nam" },
+            { hanzi: "美国", pinyin: "Měiguó", meaning: "Mỹ" },
+            { hanzi: "英国", pinyin: "Yīngguó", meaning: "Anh" },
+            { hanzi: "日本", pinyin: "Rìběn", meaning: "Nhật Bản" },
+            { hanzi: "韩国", pinyin: "Hánguó", meaning: "Hàn Quốc" },
+            { hanzi: "人", pinyin: "rén", meaning: "người" },
+            { hanzi: "学生", pinyin: "xuésheng", meaning: "học sinh, sinh viên" },
+            { hanzi: "老师", pinyin: "lǎoshī", meaning: "giáo viên" }
+        ];
 
-function loadProgress() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) {
-      const fresh = defaultProgress();
-      saveProgress(fresh);
-      return fresh;
-    }
-    const parsed = JSON.parse(raw);
-    // Merge with defaults to stay forward-compatible
-    return Object.assign(defaultProgress(), parsed, {
-      moduleProgress: Object.assign(defaultProgress().moduleProgress, parsed.moduleProgress || {})
-    });
-  } catch (e) {
-    console.warn("Could not read progress, resetting.", e);
-    const fresh = defaultProgress();
-    saveProgress(fresh);
-    return fresh;
-  }
-}
+        // Quiz Questions Dataset
+        const quizData = [
+            {
+                question: "Câu 1. “Tôi tên là Minh” được nói như thế nào?",
+                options: ["我叫明。", "我是明。", "你叫明。"],
+                correct: 0
+            },
+            {
+                question: "Câu 2. “Bạn là người nước nào?”",
+                options: ["你叫什么名字？", "你是哪国人？", "你是学生吗？"],
+                correct: 1
+            },
+            {
+                question: "Câu 3. “Tôi là người Việt Nam.”",
+                options: ["我是中国人。", "我叫越南。", "我是越南人。"],
+                correct: 2
+            },
+            {
+                question: "Câu 4. Từ nào có nghĩa là “tên”?",
+                options: ["名字", "国家", "学生"],
+                correct: 0
+            },
+            {
+                question: "Câu 5. “Cô ấy là người Nhật Bản.”",
+                options: ["他是日本人。", "她是日本人。", "她叫日本。"],
+                correct: 1
+            }
+        ];
 
-function saveProgress(p) {
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); }
-  catch (e) { console.warn("Could not save progress.", e); }
-}
+        // Dialogue Dataset
+        const dialogueData = [
+            { speaker: "A", chinese: "你好！你叫什么名字？", pinyin: "Nǐ hǎo! Nǐ jiào shénme míngzi?", vietnamese: "Xin chào! Bạn tên là gì?" },
+            { speaker: "B", chinese: "你好！我叫安。你呢？", pinyin: "Nǐ hǎo! Wǒ jiào Ān. Nǐ ne?", vietnamese: "Xin chào! Tôi tên là An. Còn bạn?" },
+            { speaker: "A", chinese: "我叫大卫。你是哪国人？", pinyin: "Wǒ jiào Dàwèi. Nǐ shì nǎ guó rén?", vietnamese: "Tôi tên là David. Bạn là người nước nào?" },
+            { speaker: "B", chinese: "我是越南人。你呢？", pinyin: "Wǒ shì Yuènán rén. Nǐ ne?", vietnamese: "Tôi là người Việt Nam. Còn bạn?" },
+            { speaker: "A", chinese: "我是英国人。", pinyin: "Wǒ shì Yīngguó rén.", vietnamese: "Tôi là người Anh." }
+        ];
 
-let progress = loadProgress();
+        let currentSpeechSpeed = 1.0;
 
-/* ---------- Helpers ---------- */
-function lessonKey(w, l) { return `${w}.${l}`; }
+        // Initialize App on Load
+        window.onload = function() {
+            renderVocabulary();
+            renderQuiz();
+            renderDialogue();
+        };
 
-function overallPercent() {
-  return Math.round((progress.completedLessons.length / TOTAL_LESSONS) * 100);
-}
+        // Tab Switching
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('bg-white', 'text-red-700', 'shadow-sm');
+                btn.classList.add('text-white');
+            });
 
-function weekPercent() {
-  const w = progress.currentWeek;
-  const doneThisWeek = progress.completedLessons.filter(k => k.startsWith(w + ".")).length;
-  return Math.round((doneThisWeek / LESSONS_PER_WEEK) * 100);
-}
+            document.getElementById('tab-' + tabId).classList.add('active');
+            const activeBtn = document.getElementById('btn-' + tabId);
+            activeBtn.classList.add('bg-white', 'text-red-700', 'shadow-sm');
+            activeBtn.classList.remove('text-white');
+        }
 
-function todayStr() {
-  const d = new Date();
-  const m = String(d.getMonth() + 1).padStart(2, "0");
-  const day = String(d.getDate()).padStart(2, "0");
-  return `${d.getFullYear()}-${m}-${day}`;
-}
+        // Speed Control
+        function setSpeed(speed) {
+            currentSpeechSpeed = speed;
+            [0.75, 1, 1.25].forEach(s => {
+                const btn = document.getElementById('spd-' + s);
+                if (s === speed) {
+                    btn.classList.add('bg-white/30', 'font-bold');
+                } else {
+                    btn.classList.remove('bg-white/30', 'font-bold');
+                }
+            });
+        }
 
-/* Update streak when the user starts/continues learning */
-function touchStreak() {
-  const today = todayStr();
-  if (progress.lastStudyDate === today) return;
+        // Native Chinese Text-to-Speech (Mandarin zh-CN)
+        function speakText(text) {
+            if (!('speechSynthesis' in window)) {
+                alert("Trình duyệt của bạn không hỗ trợ tính năng phát âm.");
+                return;
+            }
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'zh-CN';
+            utterance.rate = currentSpeechSpeed;
+            window.speechSynthesis.speak(utterance);
+        }
 
-  const y = new Date();
-  y.setDate(y.getDate() - 1);
-  const ym = String(y.getMonth() + 1).padStart(2, "0");
-  const yd = String(y.getDate()).padStart(2, "0");
-  const yesterday = `${y.getFullYear()}-${ym}-${yd}`;
+        // Render Vocabulary Cards
+        function renderVocabulary() {
+            const grid = document.getElementById('vocab-grid');
+            grid.innerHTML = vocabulary.map((item, index) => `
+                <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start">
+                            <span class="text-xs font-semibold text-slate-400">#${index + 1}</span>
+                            <button onclick="speakText('${item.hanzi}')" class="text-slate-400 hover:text-red-600 p-2 rounded-lg hover:bg-red-50 transition"><i class="fa-solid fa-volume-high text-base"></i></button>
+                        </div>
+                        <div class="text-3xl font-bold text-slate-800 my-2">${item.hanzi}</div>
+                        <div class="text-sm font-medium text-red-600 pinyin-text">${item.pinyin}</div>
+                    </div>
+                    <div class="text-sm text-slate-600 mt-3 pt-3 border-t border-slate-100">${item.meaning}</div>
+                </div>
+            `).join('');
+        }
 
-  if (progress.lastStudyDate === yesterday) progress.streakDays += 1;
-  else progress.streakDays = 1;
+        // Toggle Pinyin
+        function togglePinyin() {
+            const show = document.getElementById('toggle-pinyin').checked;
+            document.querySelectorAll('.pinyin-text').forEach(el => {
+                el.style.display = show ? 'block' : 'none';
+            });
+        }
 
-  progress.lastStudyDate = today;
-  saveProgress(progress);
-}
+        // Render Quiz
+        function renderQuiz() {
+            const container = document.getElementById('quiz-container');
+            container.innerHTML = quizData.map((q, qIdx) => `
+                <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-3" id="q-block-${qIdx}">
+                    <p class="font-semibold text-slate-800">${q.question}</p>
+                    <div class="space-y-2">
+                        ${q.options.map((opt, oIdx) => `
+                            <label class="flex items-center space-x-3 p-2.5 rounded-lg bg-white border border-slate-200 cursor-pointer hover:border-red-300 transition">
+                                <input type="radio" name="question-${qIdx}" value="${oIdx}" class="text-red-600 focus:ring-red-500 w-4 h-4">
+                                <span class="text-sm text-slate-700">${opt}</span>
+                            </label>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
 
-/* ---------- Render dashboard ---------- */
-function renderDashboard() {
-  // Progress bars
-  const op = overallPercent();
-  const wp = weekPercent();
-  document.getElementById("overallPct").textContent = op + "%";
-  document.getElementById("weekPct").textContent    = wp + "%";
-  document.getElementById("overallFill").style.width = op + "%";
-  document.getElementById("weekFill").style.width    = wp + "%";
+        // Submit Quiz
+        function submitQuiz() {
+            let score = 0;
+            quizData.forEach((q, qIdx) => {
+                const selected = document.querySelector(`input[name="question-${qIdx}"]:checked`);
+                const block = document.getElementById(`q-block-${qIdx}`);
+                block.classList.remove('bg-emerald-50', 'border-emerald-300', 'bg-rose-50', 'border-rose-300');
+                
+                if (selected && parseInt(selected.value) === q.correct) {
+                    score++;
+                    block.classList.add('bg-emerald-50', 'border-emerald-300');
+                } else {
+                    block.classList.add('bg-rose-50', 'border-rose-300');
+                }
+            });
 
-  // Stat tiles
-  document.getElementById("statWeek").textContent   = progress.currentWeek;
-  document.getElementById("statLesson").textContent = progress.currentLesson;
-  document.getElementById("statStreak").textContent = progress.streakDays;
+            const scoreBadge = document.getElementById('quiz-score-badge');
+            document.getElementById('score-val').textContent = score;
+            scoreBadge.classList.remove('hidden');
+        }
 
-  // Current lesson card
-  const wk = CURRICULUM[progress.currentWeek - 1] || CURRICULUM[0];
-  document.getElementById("clWeek").textContent  = `TUẦN ${wk.week} · BÀI ${progress.currentLesson}`;
-  document.getElementById("clTitle").textContent = wk.title;
-  document.getElementById("clDesc").textContent  = wk.desc;
+        // Render Dialogue
+        function renderDialogue() {
+            const list = document.getElementById('dialogue-list');
+            list.innerHTML = dialogueData.map((line, idx) => `
+                <div class="p-4 rounded-xl border ${line.speaker === 'A' ? 'bg-slate-50 border-slate-200' : 'bg-red-50/55 border-red-100'} flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                    <div>
+                        <span class="inline-block px-2.5 py-0.5 rounded-full text-xs font-bold ${line.speaker === 'A' ? 'bg-slate-200 text-slate-700' : 'bg-red-200 text-red-800'} mb-1">Nhân vật ${line.speaker}</span>
+                        <p class="text-lg font-bold text-slate-800">${line.chinese}</p>
+                        <p class="text-xs text-red-600 font-medium">${line.pinyin}</p>
+                        <p class="text-xs text-slate-500 mt-0.5">${line.vietnamese}</p>
+                    </div>
+                    <button onclick="speakText('${line.chinese}')" class="bg-white hover:bg-slate-100 border border-slate-300 p-2.5 rounded-xl shadow-sm text-slate-700 transition">
+                        <i class="fa-solid fa-volume-high"></i> Nghe
+                    </button>
+                </div>
+            `).join('');
+        }
 
-  // Week list preview
-  const list = document.getElementById("weekList");
-  list.innerHTML = "";
-  CURRICULUM.forEach(w => {
-    const doneCount = progress.completedLessons.filter(k => k.startsWith(w.week + ".")).length;
-    const done = doneCount >= LESSONS_PER_WEEK;
-    const isCurrent = w.week === progress.currentWeek;
+        // Play Full Dialogue
+        async function playFullDialogue() {
+            for (const line of dialogueData) {
+                await new Promise(resolve => {
+                    const utterance = new SpeechSynthesisUtterance(line.chinese);
+                    utterance.lang = 'zh-CN';
+                    utterance.rate = currentSpeechSpeed;
+                    utterance.onend = () => setTimeout(resolve, 500);
+                    window.speechSynthesis.speak(utterance);
+                });
+            }
+        }
 
-    const li = document.createElement("li");
-    if (done) li.classList.add("done");
-    li.innerHTML = `
-      <div class="wk-num">${done ? "✓" : "W" + w.week}</div>
-      <div class="wk-info">
-        <div class="wk-title">Tuần ${w.week} · ${w.title}</div>
-        <div class="wk-sub">${doneCount}/${LESSONS_PER_WEEK} bài hoàn thành${isCurrent ? " · Đang học" : ""}</div>
-      </div>
-    `;
-    list.appendChild(li);
-  });
-}
+        // Custom Name Update
+        function updateCustomName() {
+            const name = document.getElementById('custom-name').value.trim();
+            document.getElementById('user-name-display').textContent = name || "______";
+        }
 
-/* ---------- Navigation ---------- */
-function showView(name) {
-  document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
-  const target = document.getElementById("view-" + name);
-  if (target) target.classList.add("active");
+        // Final Check Evaluation
+        function evaluateFinalCheck() {
+            const ans1 = document.getElementById('check-ans-1').value.trim();
+            const ans2 = document.getElementById('check-ans-2').value.trim();
+            const ans3 = document.getElementById('check-ans-3').value.trim();
 
-  document.querySelectorAll(".nav-btn").forEach(b => {
-    b.classList.toggle("active", b.dataset.view === name);
-  });
+            const fb1 = document.getElementById('feedback-1');
+            const fb2 = document.getElementById('feedback-2');
+            const fb3 = document.getElementById('feedback-3');
 
-  // Close mobile menu
-  document.getElementById("mainNav").classList.remove("open");
-}
+            if (ans1.includes("叫")) {
+                fb1.textContent = "✓ Tuyệt vời! Câu trả lời đúng cấu trúc “我叫...”";
+                fb1.className = "text-xs font-semibold text-emerald-600";
+            } else {
+                fb1.textContent = "✗ Hãy sử dụng cấu trúc “我叫 [Tên của bạn]”";
+                fb1.className = "text-xs font-semibold text-rose-600";
+            }
 
-document.querySelectorAll(".nav-btn").forEach(btn => {
-  btn.addEventListener("click", () => {
-    if (btn.disabled) return;
-    showView(btn.dataset.view);
-  });
-});
+            if (ans2.includes("国人")) {
+                fb2.textContent = "✓ Chính xác! Bạn đã dùng đúng cấu trúc quốc tịch.";
+                fb2.className = "text-xs font-semibold text-emerald-600";
+            } else {
+                fb2.textContent = "✗ Gợi ý: 我是越南人 (Wǒ shì Yuènán rén)";
+                fb2.className = "text-xs font-semibold text-rose-600";
+            }
 
-document.getElementById("navToggle").addEventListener("click", () => {
-  document.getElementById("mainNav").classList.toggle("open");
-});
-
-/* ---------- Actions ---------- */
-document.getElementById("startBtn").addEventListener("click", () => {
-  touchStreak();
-  renderDashboard();
-  // Placeholder: modules 2-10 will route to the actual lesson content.
-  alert(
-    `Bắt đầu Tuần ${progress.currentWeek} · Bài ${progress.currentLesson}\n\n` +
-    `Chủ đề: ${CURRICULUM[progress.currentWeek - 1].title}\n\n` +
-    `(Nội dung bài học sẽ được thêm ở các module tiếp theo.)`
-  );
-});
-
-document.getElementById("resetBtn").addEventListener("click", () => {
-  if (!confirm("Đặt lại toàn bộ tiến độ học tập?")) return;
-  progress = defaultProgress();
-  saveProgress(progress);
-  renderDashboard();
-});
-
-/* ---------- Init ---------- */
-renderDashboard();
-</script>
-
+            if (ans3.length > 5 && ans3.includes("叫") && ans3.includes("人")) {
+                fb3.textContent = "✓ Đoạn giới thiệu rất chuẩn xác và tự nhiên!";
+                fb3.className = "text-xs font-semibold text-emerald-600";
+            } else {
+                fb3.textContent = "✗ Hãy kết hợp ít nhất 2 câu: 我叫... ；我是越南人。";
+                fb3.className = "text-xs font-semibold text-rose-600";
+            }
+        }
+    </script>
 </body>
 </html>
